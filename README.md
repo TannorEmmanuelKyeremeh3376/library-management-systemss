@@ -95,3 +95,19 @@ To deploy with Render using this file:
 3. Use the built-in Render YAML option to deploy from `render.yaml`
 
 The included `render.yaml` is configured to deploy the `main` branch using Docker.
+
+Automated GitHub Deployments
+--
+A GitHub Actions workflow has been added at `.github/workflows/render-deploy.yml`.
+
+To use it:
+
+1. Create these GitHub secrets:
+   - `RENDER_API_KEY`
+   - `RENDER_SERVICE_ID`
+   - `DATABASE_URL`
+
+2. Push to `main`
+3. The workflow will build the project and trigger a Render deploy via the Render API.
+
+Note: This workflow assumes your Render service is already created and `RENDER_SERVICE_ID` is available from the Render dashboard.
