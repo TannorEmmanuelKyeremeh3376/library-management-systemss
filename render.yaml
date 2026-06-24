@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: library-management-system
+    env: docker
+    dockerfilePath: Dockerfile
+    branch: main
+    buildCommand: pnpm install && pnpm build
+    startCommand: pnpm start
+    envVars:
+      - key: DATABASE_URL
+        type: secret
+    plan: starter
+    regions:
+      - oregon

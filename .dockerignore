@@ -1,0 +1,15 @@
+node_modules
+build
+dist
+.vscode
+.git
+.gitignore
+Dockerfile
+docker-compose*.yml
+docker-compose*.yaml
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vercel*
+*.log
