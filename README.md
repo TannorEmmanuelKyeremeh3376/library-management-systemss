@@ -96,6 +96,18 @@ To deploy with Render using this file:
 
 The included `render.yaml` is configured to deploy the `main` branch using Docker.
 
+Render setup checklist:
+1. Create a Render Web Service and connect this repository.
+2. Choose the Docker-based service option.
+3. Add the following environment variables in Render:
+   - DATABASE_URL
+   - JWT_SECRET
+   - OWNER_OPEN_ID
+   - OAUTH_SERVER_URL
+   - NODE_ENV=production
+   - PORT=3000
+4. Deploy from the Render dashboard or push to `main` to trigger the GitHub workflow.
+
 Automated GitHub Deployments
 --
 A GitHub Actions workflow has been added at `.github/workflows/render-deploy.yml`.

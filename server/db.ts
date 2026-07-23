@@ -1,15 +1,26 @@
-import { eq, and, like, desc, asc, sql, lte, gte } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
+import { eq, and, desc, sql, lte, gte } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Client } from "pg";
+import * as schema from "../drizzle/schema";
 import { InsertUser, users, books, InsertBook, members, InsertMember, loans, InsertLoan, transactions, InsertTransaction } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
+let _client: Client | null = null;
 
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      if (!_client) {
+        _client = new Client({
+          connectionString: process.env.DATABASE_URL,
+          ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
+        });
+        await _client.connect();
+      }
+
+      _db = drizzle(_client, { schema });
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
